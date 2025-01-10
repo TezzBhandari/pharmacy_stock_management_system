@@ -1,3 +1,10 @@
 /node_modules
 /pnpm-lock.yaml
 /src/db/drizzle
+
+# jwt key
+/src/utils/keys/id_rsa_priv.pem
+/src/utils/keys/id_rsa_pub.pem
+
+# environment variables
+.env
