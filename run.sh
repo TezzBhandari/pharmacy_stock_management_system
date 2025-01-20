@@ -5,4 +5,4 @@ echo "pusing migration"
 pnpm run db:migrate 
 
 echo "stating server"
-nodemon ./src/server.ts
+nodemon  ./src/server.ts

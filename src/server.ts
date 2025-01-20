@@ -1,16 +1,18 @@
 import express from "express";
 import http from "http";
-import { requestLogger } from "./middleware/requestLogger";
 import routes from "./routes";
+import { requestLogger } from "./middleware/requestLogger";
 import { genericErrorHandler, notFoundError } from "./middleware/errorHandler";
+import { PORT } from "./env";
+import { loggerWithNameSpace } from "./utils/logger";
 
 // JSON SERIALIZABLE DOESN'T SUPPORT BIG INT. SO WE NEED PROVIDE OUR OWN SERIALIZE METHOD FOR BIG INT
 // @ts-expect-error
-BigInt.prototype.toJSON = function() {
-    return this.toString();
+BigInt.prototype.toJSON = function () {
+  return this.toString();
 };
 
-const PORT = 42069;
+const logger = loggerWithNameSpace("server file");
 
 const app = express();
 
@@ -24,13 +26,13 @@ const server = http.createServer(app);
 server.on("listening", onListening);
 
 function onListening() {
-    const addr = server.address();
-    const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr?.port;
-    console.info("Listening on " + bind);
+  const addr = server.address();
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr?.port;
+  logger.info("Listening on " + bind);
 }
 
 async function runServer() {
-    server.listen(PORT);
+  server.listen(PORT);
 }
 
 runServer();

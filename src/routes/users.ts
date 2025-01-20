@@ -1,7 +1,7 @@
-import Router from "express";
+import { Router } from "express";
 import { validateReqBody } from "../middleware/validator";
-import { createUserBodySchema } from "../schema/users";
-import { createUser } from "../controller/users";
+import { createUserBodySchema } from "../schema";
+import { createUser } from "../controllers";
 
 const usersRouter = Router();
 

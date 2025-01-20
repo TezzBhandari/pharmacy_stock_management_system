@@ -1,7 +1,7 @@
-import Router from "express";
-import { login } from "../controller/auth";
+import { Router } from "express";
+import { login } from "../controllers";
 import { validateReqBody } from "../middleware/validator";
-import { loginBodySchema } from "../schema/authenticate";
+import { loginBodySchema } from "../schema";
 
 const authRouter = Router();
 

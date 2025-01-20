@@ -11,7 +11,7 @@ const usernameRegex = /^[A-Za-z0-9_]+$/;
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[..$!%*?&#])[A-Za-z\d..$!%*?&#]{8,}$/;
 
-export const createUserBodySchema = z.object({
+export const createTenantOnboardingnSchema = z.object({
   fullname: z
     .string({ message: requiredMsg("fullname") })
     .min(1, { message: requiredMsg("fullname") }),
@@ -21,6 +21,9 @@ export const createUserBodySchema = z.object({
     .refine((value) => usernameRegex.test(value), {
       message: invalidUsernameFormatMsg(),
     }),
+  organizationName: z
+    .string({ message: requiredMsg("organization name") })
+    .min(1, { message: requiredMsg("organization name") }),
   email: z
     .string({ message: requiredMsg("email") })
     .min(1, { message: requiredMsg("email") })

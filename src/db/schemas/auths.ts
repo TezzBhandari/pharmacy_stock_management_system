@@ -13,7 +13,7 @@ export const auths = pgTable("auths", {
     updatedAt: timestamp("updated_at", { mode: "string" }).notNull(),
 });
 
-export const authsRelations = relations(auths, ({ one }) => ({
+export const authRelations = relations(auths, ({ one }) => ({
     user: one(users, {
         fields: [auths.userId],
         references: [users.id],

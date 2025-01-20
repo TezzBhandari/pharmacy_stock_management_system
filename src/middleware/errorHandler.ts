@@ -2,18 +2,19 @@ import { z } from "zod";
 import { loggerWithNameSpace } from "../utils/logger";
 import { ApiHttpError } from "../error/ApiHttpError";
 import HttpStatusCodes from "../constants/HttpStatusCodes";
-import type { Request, Response, NextFunction } from "express";
 import zodErrorFormatter from "../utils/zodErrorFormat";
+import type { Request, Response, NextFunction } from "express";
+import { DrizzleError } from "drizzle-orm";
 
 const logger = loggerWithNameSpace("Error Handler middleware");
 
 /**
  * middleware: handles the case when a resource is not found
  *
- * @param {Request} req - the request object
- * @param {Response} res - the response object
- * @param {NextFunction} next - the  object
- * @returns {Response} The HTTP response with a status code of 404 and a JSON object containing the error message.
+ * ..param {Request} req - the request object
+ * ..param {Response} res - the response object
+ * ..param {NextFunction} next - the  object
+ * ..returns {Response} The HTTP response with a status code of 404 and a JSON object containing the error message.
  */
 export const notFoundError = (
   _req: Request,
@@ -52,7 +53,7 @@ export const genericErrorHandler = (
     return;
   }
 
-  logger.error("internal server error");
+  logger.error(err);
   res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
     status: "error",
     message: "internal server error",

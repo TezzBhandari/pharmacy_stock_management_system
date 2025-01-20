@@ -1,20 +1,18 @@
-import {
-    pgTable,
-    pgEnum,
-    bigint,
-    varchar,
-    timestamp,
-} from "drizzle-orm/pg-core";
+import { pgTable, bigint, varchar, timestamp } from "drizzle-orm/pg-core";
 
 import { relations } from "drizzle-orm";
 import { auths } from "./auths";
-
-export const userRoleEnum = pgEnum("user_role", ["admin", "customer"]);
+import { tenants } from "./tenants";
+import { usersRoles } from "./users_roles";
 
 export const users = pgTable("users", {
     id: bigint("id", {
         mode: "bigint",
     }).primaryKey(),
+
+    tenantId: bigint("tenant_id", { mode: "bigint" })
+        .notNull()
+        .references(() => tenants.id),
 
     fullname: varchar("fullname", {
         length: 100,
@@ -33,11 +31,15 @@ export const users = pgTable("users", {
         .unique(),
 
     password: varchar("password", { length: 255 }).notNull(),
-    userRole: userRoleEnum("user_role").notNull().default("customer"),
     createdAt: timestamp("created_at", { mode: "string" }).notNull(),
     updatedAt: timestamp("updated_at", { mode: "string" }).notNull(),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const userRelations = relations(users, ({ many, one }) => ({
     auths: many(auths),
+    tenant: one(tenants, {
+        fields: [users.tenantId],
+        references: [tenants.id],
+    }),
+    roles: many(usersRoles),
 }));
