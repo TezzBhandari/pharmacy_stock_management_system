@@ -1,10 +1,14 @@
 import { Router } from "express";
-import { login } from "../controllers/auth";
 import { validateReqBody } from "../middleware/validator";
-import { createTenantBodySchema } from "../schema";
+import { createTenantOnboardingSchema } from "../schema/onboarding";
+import { onboarding } from "../controllers";
 
 const tenantRouter = Router();
 
-tenantRouter.post("/", validateReqBody(createTenantBodySchema), login);
+tenantRouter.post(
+    "/onboarding",
+    validateReqBody(createTenantOnboardingSchema),
+    onboarding,
+);
 
 export default tenantRouter;

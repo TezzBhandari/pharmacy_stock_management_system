@@ -15,5 +15,5 @@ export const maxCharacterMsg = (field: string, max: number) => {
 };
 
 export const invalidPasswordFormatMsg = () => {
-    return `password must be at least with one uppercase letter, one lowercase letter, one number, and one special character`;
+    return `password must be at least 8 character long with one uppercase letter, one lowercase letter, one number, and one special character`;
 };
